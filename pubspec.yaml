@@ -32,8 +32,8 @@ dependencies:
     sdk: flutter
   
   audioplayers: ^6.0.0
-  grpc: ^4.0.0
-  protobuf: ^3.1.0
+  grpc: ^5.1.0
+  protobuf: ^6.0.0
   web_socket_channel: ^3.0.0
 
   # The following adds the Cupertino Icons font to your application.

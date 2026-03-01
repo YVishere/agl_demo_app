@@ -5,6 +5,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
 import 'package:web_socket_channel/web_socket_channel.dart';
+import 'kuksa_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -68,6 +69,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final _player = AudioPlayer();
 
+  late final KuksaService _kuksa;
+  double _speed = 0.0;
+  late StreamSubscription<double> _speedSub;
+
   void _onClick(bool audioNImage) async {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -112,8 +117,24 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _kuksa = KuksaService();
+    _speedSub = _kuksa.speedStream().listen(
+      (speed) {
+        setState(() => _speed = speed);
+      },
+      onError: (e) {
+        print('KUKSA error: $e');
+      },
+    );
+  }
+
+  @override
   void dispose(){
+    _speedSub.cancel();
     _player.dispose();
+    _kuksa.dispose();
     super.dispose();
   }
 
@@ -175,6 +196,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     'Name of the Host system: $name \n Version: $version',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
+                  Text('Speed: ${(_speed.toStringAsFixed(1))} km/h'),
                 ],
               ),
             ),
