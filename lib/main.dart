@@ -193,7 +193,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: .center,
                 children: [
                   Text(
-                    'Name of the Host system: $name \n Version: $version',
+                    'My name: Aditya Yellapuntula Venkata\nName of the Host system: $name \n Version: $version',
                     style: Theme.of(context).textTheme.headlineMedium,
                   ),
                   Text('Speed: ${(_speed.toStringAsFixed(1))} km/h'),
